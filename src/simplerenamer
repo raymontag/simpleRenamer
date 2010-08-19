@@ -1,0 +1,66 @@
+from optparse import OptionParser
+from sys import exit
+import os
+import re
+
+#A function to rename the files
+def rename_files(start, prefix, postfix, conserve, files):
+    print "Rename files"
+    
+    for i in files:
+        #Prepare new name
+        expand = ""
+        
+        if conserve:
+            expand = re.search(r"(\..*)$", i)
+            if not expand == None:
+                expand = expand.group(0)
+            else:
+                expand = ""
+            
+            print "Conserve expand %s" % expand
+        
+        name = "%s%d%s%s" % (prefix, start, postfix, expand)
+        
+        #Rename the file!
+        if os.path.isfile(i) and not os.path.exists(name):
+            print "Rename %s to %s" % (i, name)
+            
+            os.rename(i, name)
+            start += 1
+        elif os.path.isfile(i) and os.path.exists(name):
+            print "Will not rename %s to %s because %s exists!" % (i, name, name)
+            start += 1
+        elif os.path.isdir(i):
+            print "Will not rename %s to %s, 'cause it's a directory" % (i, name)
+        elif (not os.path.exists(i)) and (not i == ""):
+            print "%s doesn't exists" % i
+    
+parser = OptionParser("simplerenamer [options] directory")
+parser.add_option("--pre", dest="prefix", default='', help="set prefix that will be placed to the left of the number")
+parser.add_option("--post", dest="postfix", default='', help="set postfix that will be placed to the right of the number")
+parser.add_option("-c", "--conserve", action="store_true", dest="conserve", default=False, help="Conserve file extension")
+parser.add_option("-s", "--start", dest="start", default=1, help="set startnumber")
+parser.add_option("-l", "--list", dest="list", default=False, help="use a list of files instead of all files in the directory")
+(options, args) = parser.parse_args()
+
+if not (len(args) == 1 and os.path.isdir(args[0])):
+    print "Last argument must be a directory!"
+    exit()
+
+#If list-option is chosen read it out
+if options.list and os.path.isfile(options.list):
+    print "Read filenames from %s" % options.list
+    files = [i.rstrip('\n') for i in open(options.list, "r")]
+elif options.list and (os.path.isdir(options.list) or not os.path.exists(options.list)):
+    print "Path to list don't exists or is not a file"
+    exit()
+else:
+    print "Read the whole directory" 
+    files = os.listdir(args[0])
+
+print "Change directory"  
+os.chdir(args[0])
+    
+#Start Renaming
+rename_files(int(options.start), options.prefix, options.postfix, options.conserve, files)

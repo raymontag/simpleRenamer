@@ -1,0 +1,32 @@
+simpleRenamer v.1.0
+
+Written by Karsten König
+
+Description
+
+This is a simple rename-tool with some nice options written in Python.
+
+It's a spin-off of another project of mine called cuteRenamer.
+
+Install: The requirements are Python. 
+
+In the directory where your tarball is extracted type "python setup.py install" with root-rights.
+
+Usage: simplerenamer [options] directory
+
+Options:
+  -h, --help            show this help message and exit
+  --pre=PREFIX          set prefix that will be placed to the left of the
+                        number
+  --post=POSTFIX        set postfix that will be placed to the right of the
+                        number
+  -c, --conserve        Conserve file extension
+  -s START, --start=START
+                        set startnumber
+  -l LIST, --list=LIST  use a list of files instead of all files in the
+                        directory
+
+Copyright (C) 2010 Karsten König <KarstenKoenig@gmx.net>
+
+This program is free software; you can use it under the terms of the MIT-License.
+You should have received a copy of the MIT-License along with this program; if not check out http://www.opensource.org/licenses/mit-license.php
