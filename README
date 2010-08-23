@@ -1,4 +1,4 @@
-simpleRenamer v.1.0
+simpleRenamer v.1.1
 
 Written by Karsten König
 
@@ -25,6 +25,7 @@ Options:
                         set startnumber
   -l LIST, --list=LIST  use a list of files instead of all files in the
                         directory
+  -i, --interactive     choose which files should be renamed interactive
 
 Copyright (C) 2010 Karsten König <KarstenKoenig@gmx.net>
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from optparse import OptionParser
 from sys import exit
 import os
@@ -42,6 +44,7 @@ parser.add_option("--post", dest="postfix", default='', help="set postfix that w
 parser.add_option("-c", "--conserve", action="store_true", dest="conserve", default=False, help="Conserve file extension")
 parser.add_option("-s", "--start", dest="start", default=1, help="set startnumber")
 parser.add_option("-l", "--list", dest="list", default=False, help="use a list of files instead of all files in the directory")
+parser.add_option("-i", "--interactive", action="store_true", dest="interactive", default=False, help="choose which files should be renamed interactive")
 (options, args) = parser.parse_args()
 
 if not (len(args) == 1 and os.path.isdir(args[0])):
@@ -55,6 +58,19 @@ if options.list and os.path.isfile(options.list):
 elif options.list and (os.path.isdir(options.list) or not os.path.exists(options.list)):
     print "Path to list don't exists or is not a file"
     exit()
+elif options.interactive:
+    print "Start interactive-mode"
+    whole_dir = os.listdir(args[0])
+    files = []
+    for i in whole_dir:
+        choice = raw_input("Rename %s?[y/n]" % i)
+        if choice == "n":
+            continue
+        elif choice == "y" or choice == "":
+            files.append(i)
+        else:
+            print "%s is not a valid answer; will continue with next filename" % choice
+            continue
 else:
     print "Read the whole directory" 
     files = os.listdir(args[0])
