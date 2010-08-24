@@ -1,3 +1,10 @@
+'''
+Copyright (C) 2010 Karsten König <KarstenKoenig@gmx.net>
+
+This is a simple rename-tool with some nice options written in Python.
+
+It's a spin-off of another project of mine called cuteRenamer.
+'''
 #!/usr/bin/env python
 
 from optparse import OptionParser
@@ -5,7 +12,11 @@ from sys import exit
 import os
 import re
 
-#A function to rename the files
+'''
+This function will rename all files included in "files"
+
+The other parameters are explained in the help message
+'''
 def rename_files(start, prefix, postfix, conserve, files):
     print "Rename files"
     
@@ -47,6 +58,7 @@ parser.add_option("-l", "--list", dest="list", default=False, help="use a list o
 parser.add_option("-i", "--interactive", action="store_true", dest="interactive", default=False, help="choose which files should be renamed interactive")
 (options, args) = parser.parse_args()
 
+#Test if the last argument is a directory
 if not (len(args) == 1 and os.path.isdir(args[0])):
     print "Last argument must be a directory!"
     exit()
@@ -55,9 +67,11 @@ if not (len(args) == 1 and os.path.isdir(args[0])):
 if options.list and os.path.isfile(options.list):
     print "Read filenames from %s" % options.list
     files = [i.rstrip('\n') for i in open(options.list, "r")]
+#If list-option is chosen but the path to the list doesn't exist
 elif options.list and (os.path.isdir(options.list) or not os.path.exists(options.list)):
     print "Path to list don't exists or is not a file"
     exit()
+#If interactive is chosen
 elif options.interactive:
     print "Start interactive-mode"
     whole_dir = os.listdir(args[0])
@@ -71,10 +85,12 @@ elif options.interactive:
         else:
             print "%s is not a valid answer; will continue with next filename" % choice
             continue
+#If no option is chosen
 else:
     print "Read the whole directory" 
     files = os.listdir(args[0])
 
+#Change to the working directory
 print "Change directory"  
 os.chdir(args[0])
     
