@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from setuptools import setup
 
 setup(
@@ -9,7 +11,7 @@ setup(
 	author = "Karsten Koenig",
 	author_email = "KarstenKoenig@gmx.net",
 	url = 'http://www.github.com/raymontag/simpleRenamer',
-	download_url = 'http://www.github.com/downloads/raymontag/simpleRenamer/simpleRenamer-v.1.0.tar.gz',
+	download_url = 'http://www.github.com/downloads/raymontag/simpleRenamer/simpleRenamer-v.1.1.tar.gz',
 	scripts = ['src/simplerenamer'],
-	platforms = "Linux"
+	platforms = ["Linux", "Windows"]
 )
